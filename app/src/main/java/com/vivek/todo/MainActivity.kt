@@ -3,6 +3,7 @@ package com.vivek.todo
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.room.Room
 import com.vivek.todo.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
@@ -31,23 +32,25 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-    }
-
-    fun saveBtn(view: View) {
-        GlobalScope.launch(Dispatchers.IO) {
-            db.userDao().insert(User("vivek", "5", "Amd", 32))
-        }
-    }
-
-    fun fetchBtn(view: View) {
-        runBlocking {
-            val list = GlobalScope.async(Dispatchers.IO) { db.userDao().getAllUser() }
-            if (list.await().isNotEmpty()) {
-                with(list.await()[0]) {
-                    val str: String = "$name $age $number $address"
+        db.userDao().getAllUser().observe(this, Observer { list ->
+            if (list.isNotEmpty()) {
+                with(list[list.size-1]) {
+                    val str = "$name $age $number $address"
                     binding.tvData.text = str
                 }
             }
+        })
+
+    }
+
+    /*
+    * check fetch button on old commit
+    * */
+    var age:Int=20
+    fun saveBtn(view: View) {
+        age++
+        GlobalScope.launch(Dispatchers.IO) {
+            db.userDao().insert(User(1,"viveks", "5", "Amd", age))
         }
     }
 }

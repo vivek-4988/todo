@@ -1,14 +1,12 @@
 package com.vivek.todo
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.lifecycle.LiveData
+import androidx.room.*
 
 @Dao
 interface UserDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(user: User)
 
     @Insert
@@ -18,7 +16,7 @@ interface UserDao {
     fun delete(user: User)
 
     @Query("select * from User")
-    suspend fun getAllUser(): List<User>
+    fun getAllUser(): LiveData<List<User>>
 
     @Query("select * from User where age >= :age")
     fun getAge(age: Int): List<User>
