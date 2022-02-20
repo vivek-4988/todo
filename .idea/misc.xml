@@ -4,8 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/project/androidgittest/todo/app/src/main/res/layout/activity_history.xml" value="0.21770833333333334" />
-        <entry key="..\:/project/androidgittest/todo/app/src/main/res/layout/activity_main.xml" value="0.21770833333333334" />
-        <entry key="..\:/project/androidgittest/todo/app/src/main/res/layout/activity_task.xml" value="0.21770833333333334" />
+        <entry key="..\:/project/androidgittest/todo/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/project/androidgittest/todo/app/src/main/res/layout/activity_task.xml" value="0.1" />
+        <entry key="..\:/project/androidgittest/todo/app/src/main/res/layout/row_todo_item.xml" value="0.21770833333333334" />
         <entry key="..\:/project/androidgittest/todo/app/src/main/res/menu/main_menu.xml" value="0.21770833333333334" />
       </map>
     </option>

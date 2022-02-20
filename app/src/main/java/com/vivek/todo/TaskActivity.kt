@@ -4,14 +4,18 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.TimePicker
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.room.Room
 import com.vivek.todo.databinding.ActivityTaskBinding
 import com.vivek.todo.dbwork.AppDb
+import com.vivek.todo.dbwork.ToDoModel
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -25,11 +29,11 @@ class TaskActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityTaskBinding
 
-    private val labales = arrayListOf("Business","Insurance","Shopping","Cooking")
-
+    private val labales = arrayListOf("Business", "Insurance", "Shopping", "Cooking")
+    lateinit var myBusiness: String
 
     val db by lazy {
-        Room.databaseBuilder(this, AppDb::class.java, DB_NAME)
+        AppDb.getDb(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,15 +79,28 @@ class TaskActivity : AppCompatActivity() {
             timePickDialog.show()
         }
 
-
         setUpSpinner()
     }
 
     private fun setUpSpinner() {
-        val adapter=ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,labales)
+        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, labales)
         labales.sort()
         binding.spinner.adapter = adapter
+        binding.spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
 
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                myBusiness = labales[position]
+            }
+
+        }
     }
 
     private fun updateTime() {
@@ -99,5 +116,18 @@ class TaskActivity : AppCompatActivity() {
         binding.timePick.visibility = View.VISIBLE
     }
 
+    /*
+    * save using coroutine
+    * */
+    fun saveTask(view: View) {
+        var title = binding.textInputEditText.text.toString()
+        var desc = binding.textInputEditText2.text.toString()
+        var date = binding.datePick.text.toString()
+        var time = binding.timePick.text.toString()
 
+        GlobalScope.launch(IO) {
+            db?.dao()?.insert(ToDoModel(title, desc, myBusiness, date = date, time = time))
+        }
+        finish()
+    }
 }

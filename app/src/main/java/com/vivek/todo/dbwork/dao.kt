@@ -3,15 +3,16 @@ package com.vivek.todo.dbwork
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy.IGNORE
 import androidx.room.Query
 
 @Dao
 interface dao {
 
-    @Insert
+    @Insert(onConflict = IGNORE)
     suspend fun insert(todo:ToDoModel):Long
 
-    @Query("select * from todomodel where isFinished!=-1")
+    @Query("select * from todomodel")
     fun getTask():LiveData<List<ToDoModel>>
 
     @Query("update todomodel set isFinished =1 where id=:uid")
