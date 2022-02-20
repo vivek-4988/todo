@@ -19,8 +19,8 @@
             android:layout_height="50dp"
             android:background="@color/black"
             android:gravity="center_vertical"
-            android:text="Add New Task"
             android:padding="10dp"
+            android:text="Add New Task"
             android:textColor="@color/white"
             android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +41,7 @@
             android:id="@+id/textInputEditText2"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:hint="Note"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,23 +51,44 @@
             android:id="@+id/datePick"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
             android:background="@color/teal_700"
             android:text="Select Date"
             android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@+id/textInputEditText2"
             tools:layout_editor_absoluteX="20dp" />
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/timePick"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/teal_700"
+            android:text="Select Time"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/datePick"
+            tools:layout_editor_absoluteX="20dp" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/teal_700"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/timePick"
+            tools:layout_editor_absoluteX="20dp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/Save"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
             android:background="@color/purple_700"
             android:text="Save"
             android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@+id/datePick"
+            app:layout_constraintTop_toBottomOf="@+id/spinner"
             tools:layout_editor_absoluteX="20dp" />
 
 
